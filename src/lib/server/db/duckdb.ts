@@ -1,9 +1,10 @@
-import duckdb, { OPEN_READONLY } from 'duckdb'
+import duckdb from 'duckdb'
 import { DUCKDB_PATH } from '$env/static/private';
 import type { Cik, Cusip } from "./types";
 
 // Instantiate DuckDB
-const db = new duckdb.Database(DUCKDB_PATH, OPEN_READONLY);
+const db = new duckdb.Database(DUCKDB_PATH,{
+    "access_mode": "READ_ONLY"});
 const conn = db.connect();
 console.log(conn);
 

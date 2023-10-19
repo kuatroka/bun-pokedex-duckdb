@@ -1,0 +1,60 @@
+<script lang="ts">
+	import { page } from "$app/stores";
+	import { caughtMonsters } from "$lib/stores";
+	
+</script>
+
+<div class="navbar">
+	<a href="/pokemons" class:active={$page.url.pathname === '/pokemons'}>HOME</a>
+	<a href="/pokemons/my-monsters" class:active={$page.url.pathname === '/pokemons/my-monsters'}>MY MONSTERS({$caughtMonsters.length})</a>
+</div>
+<!-- <script>
+	import '../app.css';
+</script> -->
+
+<div class="container">
+    <slot />
+</div>
+
+<style>
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	background-color: #444;
+	color: #fff;
+	padding: 10px;
+	overflow: hidden;
+	align-items: center;
+}
+
+.navbar a {
+	color: #fff;
+	text-decoration: none;
+	/* padding: 8px; */
+}
+
+.navbar a:hover {
+	color: #ccc;
+}
+
+.navbar a.active {
+	/* font-weight: bold; */
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	padding: 4px;
+}
+
+:global(body) {
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 90%;
+	margin: 0 auto;
+	widows: 1200px;
+}
+
+</style>
+
+

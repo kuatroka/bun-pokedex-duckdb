@@ -6,6 +6,7 @@
     import { generations } from "./generations";    
     import Monster from "./Monster.svelte";
     import { browser } from '$app/environment';
+    import { count } from "$lib/stores";
     export let data: PageData;
 
     let form = {
@@ -14,11 +15,6 @@
     let searchString = '';
     $: selectedMonsters = data.monsters.filter((monster) =>  { 
         return monster.name.toLowerCase().includes(searchString.toLowerCase())});
-
-    $: monsterId = $page.url.searchParams.get('monsterId') || '';
-    $: monster = data.monsters.find((entry) => entry.id === monsterId);
-    $: monsterId2 = $page.url.searchParams.get("monsterId2") || '';
-    $: monster2 = data.monsters.find((entry) => entry.id === monsterId2);
 
     $: selectedGenerationId = $page.url.searchParams.get('generation_id') || '';
 
@@ -36,21 +32,14 @@
     // $: console.log($page.url.searchParams.get('monsterId'))
 </script>
 
-<!-- {#if monster}
-<Monster monster={monster}
-        updateSearchParams={updateSearchParams}
-        isInteractive={false} />
-
-{/if}
-
-{#if monster2}
-<Monster monster={monster2} 
-        updateSearchParams={updateSearchParams}
-        isInteractive={false}  />
-{/if} -->
-
 
 <div class="generations">
+    <!-- button that adds to count -->
+    <button 
+        class='generation'
+        on:click={() => $count += 1}
+        >Add to Count {$count}
+    </button>
     <button
         class='generation'
         class:active={selectedGenerationId === 'all'}
@@ -77,9 +66,7 @@
 {#each selectedMonsters as monster (monster.id)}
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <Monster monster={monster}
-    updateSearchParams={updateSearchParams}
-        isInteractive={true}  />
+    <Monster monster={monster} />
 {/each}
 </div>
 
@@ -117,33 +104,6 @@
         flex-wrap: wrap;
         justify-content: center;
     }
-
-    .monster {
-        width: 100px;
-        /* border: 1px solid black; */
-        margin: 10px;
-        padding: 10px;
-        position: relative;
-        background-color: #eee;
-    }
-    .monster:hover {
-        background-color: #ddd;
-    }
-    .monster-id {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        font-size: 0.8em;
-        color: #aaa;
-
-    }
-
-    .monster-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
 
 
 .search-form {

@@ -2,6 +2,11 @@
     import type { PageData } from "./$types";
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
+    import {DataTable, AreaChart, Column} from '@evidence-dev/core-components';
+    // import evidenceInclude from '@evidence-dev/core-components';
+
+  
+
     export let data : PageData;
 
     let form = {
@@ -33,6 +38,24 @@
 $: {console.log('console.log for searchparams', $page.url.searchParams.get('cusipId2'))}
 
 </script>
+
+
+<DataTable data="{selectedCusip}"
+  search='true' >
+  <Column id="quarter" title='Quarter'/>
+  <Column id="value" title='Value' contentType=colorscale/>  
+</DataTable>
+
+<br>
+<!-- <AreaChart 
+data={selectedCusip}
+x=quarter 
+y=value
+/> -->
+
+{#each selectedCusip as entry}
+{entry.name_of_issuer} - {entry.value}
+{/each}
 <!-- <h1>{cusipId}</h1>
 <h1>{cusip?.name_of_issuer}</h1>
 <h1>{cusipId2}</h1>
@@ -87,38 +110,39 @@ $: {console.log('console.log for searchparams', $page.url.searchParams.get('cusi
   </div>
     
     
-    <style>
-        .quarters {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-    
-        .quarter {
-            width: 100px;
-            margin: 5px;
-            /* margin: auto; */
-            padding: 5px 10px;
-            border: 1px solid black;
-            background-color: #f9f9f9;
-            color: steelblue;
-            align-items: center;
-            text-align: center;
-        }
-        .quarter:hover {
-            background-color: #eee;
-        }
-    
-        .cusips {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+<style>
+  
+.quarters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.quarter {
+    width: 100px;
+    margin: 5px;
+    /* margin: auto; */
+    padding: 5px 10px;
+    border: 1px solid black;
+    background-color: #f9f9f9;
+    color: steelblue;
+    align-items: center;
+    text-align: center;
+}
+.quarter:hover {
+    background-color: #eee;
+}
+
+.cusips {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
     
 .cusip {
-  width: 100px;
+  width: 140px;
   /* border: 1px solid black; */
   margin: 10px;
   padding: 10px;
@@ -153,34 +177,7 @@ $: {console.log('console.log for searchparams', $page.url.searchParams.get('cusi
   align-items: center;
   padding-top: 20px;
 }
-.cusip {
-  width: 100px;
-  /* border: 1px solid black; */
-  margin: 10px;
-  padding: 10px;
-  position: relative;
-  background-color: #eee;
-  overflow: auto;
-}
 
-.cusip:hover {
-  background-color: #ddd; 
-}
-
-.cusip-id {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  font-size: 0.8em;
-  color: #aaa;
-}
-
-.cusip-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-}
 
 .search-form {
         display: flex;
